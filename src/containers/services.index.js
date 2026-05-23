@@ -1,0 +1,12 @@
+export { movimentacaoService } from './services.movimentacao.container.js';
+export { usuarioService } from './services.usuario.container.js';
+export { loteService } from './services.lote.container.js';
+export { dashboardService } from './services.dashboard.container.js';
+export { auditoriaService } from './services.auditoria.container.js';
+export { especieService } from './services.especie.container.js';
+export { destinatarioService } from './services.destinatario.container.js';
+export { estufaService } from './services.estufa.container.js';
+export { relatorioService } from './services.relatorio.container.js';
+export { tokenService } from './services.token.container.js';
+export { sessionService } from './services.session.container.js';
+export { authService } from './services.auth.container.js';
