@@ -13,24 +13,59 @@ const router = express.Router();
 router
   // ── Histórico de Lotes ──
   .get(
-    '/lotes',
+    '/relatorios/lotes',
     AuthMiddleware,
     authorize(TIPO_USUARIO.Administrador, TIPO_USUARIO.Operador),
     asyncWrapper(RelatorioController.listarLotes)
   )
   // ── Movimentações ──
   .get(
-    '/movimentacoes',
+    '/relatorios/movimentacoes',
     AuthMiddleware,
     authorize(TIPO_USUARIO.Administrador, TIPO_USUARIO.Operador),
     asyncWrapper(RelatorioController.listarMovimentacoes)
   )
   // ── Mortalidade ──
   .get(
-    '/mortalidade',
+    '/relatorios/mortalidade',
     AuthMiddleware,
     authorize(TIPO_USUARIO.Administrador, TIPO_USUARIO.Operador),
     asyncWrapper(RelatorioController.listarMortalidade)
+  )
+  // ── Espécies ──
+  .get(
+    '/relatorios/especies',
+    AuthMiddleware,
+    authorize(TIPO_USUARIO.Administrador, TIPO_USUARIO.Operador),
+    asyncWrapper(RelatorioController.listarEspecies)
+  )
+  // ── Estufas ──
+  .get(
+    '/relatorios/estufas',
+    AuthMiddleware,
+    authorize(TIPO_USUARIO.Administrador, TIPO_USUARIO.Operador),
+    asyncWrapper(RelatorioController.listarEstufas)
+  )
+  // ── Usuários ──
+  .get(
+    '/relatorios/usuarios',
+    AuthMiddleware,
+    authorize(TIPO_USUARIO.Administrador),
+    asyncWrapper(RelatorioController.listarUsuarios)
+  )
+  // ── Destinatários ──
+  .get(
+    '/relatorios/destinatarios',
+    AuthMiddleware,
+    authorize(TIPO_USUARIO.Administrador, TIPO_USUARIO.Operador),
+    asyncWrapper(RelatorioController.listarDestinatarios)
+  )
+  // ── Auditoria ──
+  .get(
+    '/relatorios/auditoria',
+    AuthMiddleware,
+    authorize(TIPO_USUARIO.Administrador),
+    asyncWrapper(RelatorioController.listarAuditoria)
   );
 
 export default router;

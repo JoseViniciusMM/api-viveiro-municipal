@@ -8,8 +8,13 @@ class LogAuditoriaService {
 
   async registrar(dados) {
     try {
+      const pegarId = dados.usuario_id || dados.usuarioId || null;
+      const usuario_id = pegarId && typeof pegarId === 'object'
+        ? (pegarId._id || pegarId.id || null)
+        : pegarId;
+
       return await this.repository.registrar({
-        usuario_id: dados.usuario_id || dados.usuarioId || null,
+        usuario_id,
         acao: dados.acao,
         detalhes_mudanca: dados.detalhes_mudanca || dados.detalhes || {},
       });

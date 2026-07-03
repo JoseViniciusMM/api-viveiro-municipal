@@ -1,0 +1,46 @@
+services:
+
+  api:
+    build: .
+    container_name: pamine_api
+    restart: unless-stopped
+    ports:
+      - "80:7340"
+    networks:
+      - pamine_network
+    environment:
+      DB_URL: "mongodb://mongo:27017/pamine"
+      USE_IN_MEMORY_DB: "false"
+      JWT_SECRET_ACCESS_TOKEN: ${JWT_SECRET_ACCESS_TOKEN}
+      JWT_SECRET_REFRESH_TOKEN: ${JWT_SECRET_REFRESH_TOKEN}
+      EMAIL_HOST: "smtp.gmail.com"
+      EMAIL_PORT: "587"
+      EMAIL_USER: "gabrielghnc@gmail.com"
+      EMAIL_PASS: "fvpldbkyadmkwkfr"
+      DISABLED_EMAIL: "false"
+      
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:8
+    container_name: pamine_mongo
+    restart: unless-stopped
+    volumes:
+      - pamine_mongo_data:/data/db
+    networks:
+      - pamine_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+networks:
+  pamine_network:
+    driver: bridge
+
+volumes:
+  pamine_mongo_data:

@@ -1,24 +1,31 @@
-/* import mongoose from 'mongoose';
-import { seedAll } from './src/seeds/seeds.js';
+import mongoose from 'mongoose';
+import DbConnect from './src/config/DbConnect.js';
+import { seedAll } from './src/seed/seedViveiroMunicipal.js';
 
 beforeAll(async () => {
     // jest.spyOn(console, 'error').mockImplementation(() => { });
     // jest.spyOn(console, 'log').mockImplementation(() => { });
 
-    if (mongoose.connection.readyState !== 1) {
-        await new Promise((resolve, reject) => {
-            const timer = setTimeout(() => resolve(false), 15000);
-            mongoose.connection.once('connected', () => { clearTimeout(timer); resolve(true); });
-            mongoose.connection.once('error', (err) => { clearTimeout(timer); reject(err); });
-        });
-    }
+    const testPath = expect.getState().testPath;
 
-    if (mongoose.connection.readyState === 1) {
-        await seedAll();
+if (testPath.includes('/routes/') || testPath.includes('\\routes\\')) {
+        if (mongoose.connection.readyState !== 1) {
+            await DbConnect.conectar();
+        }
+        
+        if (mongoose.connection.readyState === 1) {
+            await seedAll();
+        }
     }
 }, 30000);
 
-afterAll(() => {
+afterAll(async () => {
+    const testPath = expect.getState().testPath;
+
+if (testPath.includes('/routes/') || testPath.includes('\\routes\\')) {
+        await DbConnect.desconectar();
+    }
+
     if (console.error.mockRestore) {
         console.error.mockRestore();
     }
@@ -26,4 +33,3 @@ afterAll(() => {
         console.log.mockRestore();
     }
 });
- */

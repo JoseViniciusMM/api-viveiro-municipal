@@ -15,7 +15,7 @@ import CommonResponse from '../utils/helpers/CommonResponse.js';
 class LoteController {
     listar = async (req, res, next) => {
         try {
-            const { limite, page, ...filtros } = LoteQuerySchema.parse(req.query ?? {});
+            const { limite, page, ...filtros } = LoteQuerySchema.parse(req.query);
             
             const data = await loteService.listar({ 
                 filtros, 

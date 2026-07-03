@@ -1,9 +1,14 @@
 import { TIPO_MOVIMENTACAO } from '../constants/movimentacao.js';
 
 class RelatorioService {
-  constructor({ loteRepository, movimentacaoRepository }) {
+  constructor({ loteRepository, movimentacaoRepository, especieRepository, estufaRepository, usuarioRepository, destinatarioRepository, logAuditoriaRepository }) {
     this.loteRepository = loteRepository;
     this.movimentacaoRepository = movimentacaoRepository;
+    this.especieRepository = especieRepository;
+    this.estufaRepository = estufaRepository;
+    this.usuarioRepository = usuarioRepository;
+    this.destinatarioRepository = destinatarioRepository;
+    this.logAuditoriaRepository = logAuditoriaRepository;
   }
 
   async listarLotes({ filtros = {}, page = 1, limit = 20 }) {
@@ -27,6 +32,26 @@ class RelatorioService {
       page,
       limit,
     });
+  }
+
+  async listarEspecies({ filtros = {}, page = 1, limit = 20 }) {
+    return this.especieRepository.listar({ filtros, page, limit });
+  }
+
+  async listarEstufas({ filtros = {}, page = 1, limit = 20 }) {
+    return this.estufaRepository.listar({ filtros, page, limit });
+  }
+
+  async listarUsuarios({ filtros = {}, page = 1, limit = 20 }) {
+    return this.usuarioRepository.listar({ filtros, page, limit });
+  }
+
+  async listarDestinatarios({ filtros = {}, page = 1, limit = 20 }) {
+    return this.destinatarioRepository.listar({ filtros, page, limit });
+  }
+
+  async listarAuditoria({ filtros = {}, page = 1, limit = 20 }) {
+    return this.logAuditoriaRepository.listar({ filtros, page, limit });
   }
 }
 

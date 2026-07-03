@@ -16,7 +16,7 @@ class EspecieController {
 
     listarTodas = async (req, res, next) => {
         try {
-            const { limite, page, ...filtros } = EspecieQuerySchema.parse(req.query ?? {});
+            const { limite, page, ...filtros } = EspecieQuerySchema.parse(req.query);
             const data = await especieService.listarTodas({ filtros, page, limit: limite });
             return CommonResponse.success(res, data);
         } catch (e) {

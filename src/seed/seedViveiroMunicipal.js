@@ -83,6 +83,15 @@ async function seedUsuarios() {
       cargo: cargos.find(c => c.toLowerCase().includes('operador')) || cargos[0],
       senha: senhaHash,
       status: statuses.find(s => s.toLowerCase().includes('ativo')) || statuses[0],
+    },
+    {
+      nome: "Admin Teste",
+      cpf: "222.222.222-22",
+      email: "teste@viveiro.com",
+      telefone: "(11) 97777-7777",
+      cargo: cargos.find(c => c.toLowerCase().includes('admin')) || cargos[0],
+      senha: senhaHash,
+      status: statuses.find(s => s.toLowerCase().includes('ativo')) || statuses[0],
     }
   ];
 

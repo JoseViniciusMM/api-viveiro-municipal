@@ -8,7 +8,7 @@ class MovimentacaoController {
     listar = async (req, res, next) => {
         try {
             
-            const { limite, page, ...filtros } = MovimentacaoQuerySchema.parse(req.query ?? {});
+            const { limite, page, ...filtros } = MovimentacaoQuerySchema.parse(req.query);
             
             const data = await movimentacaoService.listar({ 
                 filtros, 
@@ -62,7 +62,7 @@ class MovimentacaoController {
     buscarPorEspecie = async (req, res, next) => {
         try {
             const { especie_id } = req.params;
-            const { limite, page, ...filtros } = MovimentacaoQuerySchema.parse(req.query ?? {});
+            const { limite, page, ...filtros } = MovimentacaoQuerySchema.parse(req.query);
             
             const data = await movimentacaoService.listar({
                 filtros: { ...filtros, especieId: especie_id },
@@ -79,7 +79,7 @@ class MovimentacaoController {
     buscarPorLote = async (req, res, next) => {
         try {
             const { lote_id } = req.params;
-            const { limite, page, ...filtros } = MovimentacaoQuerySchema.parse(req.query ?? {});
+            const { limite, page, ...filtros } = MovimentacaoQuerySchema.parse(req.query);
             
             const data = await movimentacaoService.listar({
                 filtros: { ...filtros, loteId: lote_id },

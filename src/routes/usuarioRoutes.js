@@ -16,12 +16,31 @@ router
         asyncWrapper(UsuarioController.criar),
     )
 
-    // listar sevidores com filtros e paginação
+    // Listar servidores com filtros e paginação
     .get(
         '/usuarios',
         AuthMiddleware,
         authorize(TIPO_USUARIO.Administrador),
         asyncWrapper(UsuarioController.listar),
+    )
+
+    // Confirmar cadastro via link do e-mail
+    .get(
+        '/usuarios/confirmar-cadastro',
+        asyncWrapper(UsuarioController.confirmarCadastro),
+    )
+    
+    .post(
+        '/usuarios/confirmar-cadastro',
+        asyncWrapper(UsuarioController.confirmarCadastro),
+    )
+
+    // Atualizar o próprio perfil
+    .patch(
+        '/usuarios/perfil',
+        AuthMiddleware,
+        authorize(TIPO_USUARIO.Administrador, TIPO_USUARIO.Operador),
+        asyncWrapper(UsuarioController.atualizarPerfil),
     )
 
     // Atualizar dados/cargo/status de um servidor
@@ -32,7 +51,7 @@ router
         asyncWrapper(UsuarioController.atualizar),
     )
 
-    // soft delete
+    // Soft delete
     .delete(
         '/usuarios/:id',
         AuthMiddleware,
@@ -40,27 +59,12 @@ router
         asyncWrapper(UsuarioController.inativar),
     )
 
-    // buscar servidor por id
+    // Buscar servidor por id
     .get(
         '/usuarios/:id',
         AuthMiddleware,
         authorize(TIPO_USUARIO.Administrador),
         asyncWrapper(UsuarioController.buscarPorId),
-    )
-
-    // Confirmar cadastro e redefinir login
-    .post(
-        '/usuarios/confirmar-cadastro',
-        authorize(TIPO_USUARIO.Administrador, TIPO_USUARIO.Operador),
-        asyncWrapper(UsuarioController.confirmarCadastro),
-    )
-
-    // Atualizar o proprio perfil
-    .patch(
-        '/usuarios/perfil',
-        AuthMiddleware,
-        authorize(TIPO_USUARIO.Administrador, TIPO_USUARIO.Operador),
-        asyncWrapper(UsuarioController.atualizarPerfil),
     );
 
 export default router;

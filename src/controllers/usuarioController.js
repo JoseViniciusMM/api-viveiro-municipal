@@ -8,11 +8,13 @@ import {
 import { UsuarioIdSchema, UsuarioQuerySchema } from '../utils/validators/schemas/zod/querys/UsuarioQuerySchema.js';
 import CommonResponse from '../utils/helpers/CommonResponse.js';
 
+const SENHA_PADRAO_ATIVACAO = 'Viveiro@123';
+
 class UsuarioController {
 
     listar = async (req, res, next) => {
         try {
-            const { limite, page, ...filtros } = UsuarioQuerySchema.parse(req.query ?? {});
+            const { limite, page, ...filtros } = UsuarioQuerySchema.parse(req.query);
             const data = await usuarioService.listar({ filtros, page, limit: limite });
             return CommonResponse.success(res, data);
         } catch (e) {
@@ -67,9 +69,15 @@ class UsuarioController {
 
     confirmarCadastro = async (req, res, next) => {
         try {
-            const { token, senha } = ConfirmarCadastroSchema.parse(req.body);
+            const token = req.query.token || req.body?.token;
+            const senha = req.body?.senha || SENHA_PADRAO_ATIVACAO;
+
+            if (!token) {
+                return CommonResponse.error(res, 400, 'validationError', null, [{ message: 'Token é obrigatório.' }]);
+            }
+
             const data = await usuarioService.confirmarCadastro(token, senha);
-            return CommonResponse.success(res, data, 200, 'Conta ativada com sucesso.');
+            return CommonResponse.success(res, data, 200, `Conta ativada com sucesso. Senha definida: ${senha}`);
         } catch (e) {
             next(e);
         }

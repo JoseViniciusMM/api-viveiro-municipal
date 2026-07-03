@@ -10,8 +10,6 @@ class AuthMiddleware {
 
   _getTokenAndType(req) {
     const authHeader = req.headers?.authorization ?? null;
-    console.log('[AuthMiddleware] Headers recebidos:', JSON.stringify(req.headers, null, 2));
-    console.log('[AuthMiddleware] Authorization header:', authHeader);
     if (authHeader) {
       const parts = authHeader.split(' ');
       const token = parts.length === 2 ? parts[1] : parts[0];
@@ -47,7 +45,6 @@ class AuthMiddleware {
       req.user = {
         id: decoded.id,
         papeis: decoded.papeis || [],
-        instituicaoId: decoded.instituicaoId || null,
       };
       next();
     } catch (err) {

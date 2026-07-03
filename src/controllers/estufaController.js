@@ -6,7 +6,7 @@ import CommonResponse from '../utils/helpers/CommonResponse.js';
 class EstufaController {
     listar = async (req, res, next) => {
         try {
-            const { limite, page, ...filtros } = EstufaQuerySchema.parse(req.query ?? {});
+            const { limite, page, ...filtros } = EstufaQuerySchema.parse(req.query);
             const data = await estufaService.listar({ filtros, page, limit: limite });
             return CommonResponse.success(res, data);
         } catch (e) {

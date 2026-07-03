@@ -6,7 +6,7 @@ import CommonResponse from '../utils/helpers/CommonResponse.js';
 class DestinatarioController {
     listar = async (req, res, next) => {
         try {
-            const { limite, page, ...filtros } = DestinatarioQuerySchema.parse(req.query ?? {});
+            const { limite, page, ...filtros } = DestinatarioQuerySchema.parse(req.query);
             const data = await destinatarioService.listar({ filtros, page, limit: limite });
             return CommonResponse.success(res, data);
         } catch (e) {

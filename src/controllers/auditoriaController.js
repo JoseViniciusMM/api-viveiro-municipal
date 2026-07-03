@@ -5,7 +5,7 @@ import { AuditoriaQuerySchema } from '../utils/validators/schemas/zod/AuditoriaS
 class AuditoriaController {
     listar = async (req, res, next) => {
         try {
-            const { page, limit, ...filtros } = AuditoriaQuerySchema.parse(req.query ?? {});
+            const { page, limit, ...filtros } = AuditoriaQuerySchema.parse(req.query);
 
             const data = await auditoriaService.listar({
                 filtros,

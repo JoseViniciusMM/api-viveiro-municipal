@@ -8,8 +8,8 @@
     "dev": "nodemon server.js",
     "start": "node server.js",
     "seed": "node src/seed/seedViveiroMunicipal.js",
-    "test": "cross-env NODE_ENV=test NODE_NO_WARNINGS=1 node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
-    "test:coverage": "cross-env NODE_ENV=test NODE_NO_WARNINGS=1 node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage"
+    "test": "cross-env NODE_ENV=test NODE_NO_WARNINGS=1 node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand",
+    "test:coverage": "cross-env USE_IN_MEMORY_DB=false NODE_OPTIONS=--experimental-vm-modules jest --coverage --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -53,7 +53,7 @@
     "chai": "^5.2.0",
     "compression": "^1.8.0",
     "convert-csv-to-json": "^3.4.0",
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "dotenv": "^16.5.0",
@@ -86,33 +86,43 @@
     "zod": "^3.25.4",
     "zod-to-json-schema": "^3.25.1"
   },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "current"
-          }
-        }
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@containers/*": [
+        "containers/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@repositories/*": [
+        "repositories/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@models/*": [
+        "models/*"
+      ],
+      "@middlewares/*": [
+        "middlewares/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@validators/*": [
+        "validators/*"
+      ],
+      "@routes/*": [
+        "routes/*"
+      ],
+      "@controllers/*": [
+        "controllers/*"
+      ],
+      "@tests/*": [
+        "tests/*"
       ]
-    ],
-    "plugins": [
-      "babel-plugin-transform-import-meta"
-    ]
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.js$": "babel-jest"
-    },
-    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
-    "testTimeout": 30000,
-    "testEnvironment": "node",
-    "clearMocks": true,
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/server.js",
-      "!src/seed/**"
-    ]
+    }
   }
 }
+

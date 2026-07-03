@@ -1,6 +1,5 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
-import crypto from 'crypto';
 
 dotenv.config();
 
@@ -49,12 +48,10 @@ class SendMail {
         return { ok: true, skipped: true };
       }
 
-      const hashId = () => crypto.randomBytes(6).toString('hex');
-
       const mailOptions = {
         from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
         to: infoemail.to,
-        subject: `${infoemail.subject} Email: #${hashId()}`,
+        subject: infoemail.subject,
         text: infoemail.text,
         html: infoemail.html,
       };
